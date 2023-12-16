@@ -79,7 +79,7 @@ namespace WSClient.Services
                 }
                 else
                 {
-                    await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                    await CloseConnection();
                     await Connect();
                     if (trial < 5)
                         await SendMessage(message, ++trial);
