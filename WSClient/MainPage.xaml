@@ -6,6 +6,16 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
              x:DataType="vm:MessageViewModel"
              x:Class="WSClient.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"/>
+                <Setter Property="CornerRadius" Value="{OnPlatform WinUI=20,Default=60}"/>
+                <Setter Property="FontSize" Value="{OnPlatform WinUI=16,Default=22}"/>
+                <Setter Property="Padding" Value="{OnPlatform WinUI='13,10', Default='14,13'}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Disappearing" Command="{Binding DisconnectCommand}"/>
     </ContentPage.Behaviors>
@@ -31,19 +41,13 @@
             <Button 
                 Command="{Binding ConnectCommand}"
                 IsEnabled="{Binding IsDisconnected,Mode=OneWay}"
-                Grid.Column="1"                
-                CornerRadius="{OnPlatform WinUI=20,Default=50}"
-                FontSize="{OnPlatform WinUI=16,Default=20}"
-                FontFamily="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"
+                Grid.Column="1"
                 Text="{OnPlatform WinUI=Connect,Default=&#xf090;}"/>
             <Button 
                 IsEnabled="{Binding IsConnected}"
                 Command="{Binding DisconnectCommand,Mode=OneWay}"
                 Grid.Column="2"
                 Rotation="{OnPlatform WinUI=0,Default=180}"
-                CornerRadius="{OnPlatform WinUI=20,Default=50}"
-                FontFamily="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"
-                FontSize="{OnPlatform WinUI=16,Default=20}"
                 Text="{OnPlatform WinUI=Disconnect,Default=&#xf08b;}"/>
         </Grid>
         <CollectionView 
@@ -125,9 +129,6 @@
                 Grid.Column="1"
                 VerticalOptions="Center"
                 Command="{Binding SendCommand}"
-                CornerRadius="{OnPlatform WinUI=20,Default=50}"
-                FontSize="{OnPlatform WinUI=16,Default=20}"
-                FontFamily="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"
                 Text="{OnPlatform WinUI=Send,Default=&#xf1d8;}"/>
         </Grid>
     </Grid>
