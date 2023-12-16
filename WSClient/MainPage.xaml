@@ -13,11 +13,15 @@
         <vm:MessageViewModel/>
     </ContentPage.BindingContext>
     <Grid 
-        RowDefinitions="auto,*,auto" 
+        RowDefinitions="auto,auto,*,auto" 
         RowSpacing="10" 
         Margin="15">
-
+        <HorizontalStackLayout Spacing="10" FlowDirection="LeftToRight">
+            <Image Source="chating.png" WidthRequest="40" HeightRequest="40" />
+            <Label Text="WS Chat" CharacterSpacing="5" FontAttributes="Bold" FontAutoScalingEnabled="True" FontSize="Title"/>
+        </HorizontalStackLayout>
         <Grid 
+            Grid.Row="1"
             ColumnSpacing="10" 
             ColumnDefinitions="*,auto,auto">
             <Entry 
@@ -27,17 +31,24 @@
             <Button 
                 Command="{Binding ConnectCommand}"
                 IsEnabled="{Binding IsDisconnected,Mode=OneWay}"
-                Grid.Column="1"
-                Text="Connect"/>
+                Grid.Column="1"                
+                CornerRadius="{OnPlatform WinUI=20,Default=50}"
+                FontSize="{OnPlatform WinUI=16,Default=20}"
+                FontFamily="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"
+                Text="{OnPlatform WinUI=Connect,Default=&#xf090;}"/>
             <Button 
                 IsEnabled="{Binding IsConnected}"
                 Command="{Binding DisconnectCommand,Mode=OneWay}"
-                Grid.Column="2" 
-                Text="Disconnect"/>
+                Grid.Column="2"
+                Rotation="{OnPlatform WinUI=0,Default=180}"
+                CornerRadius="{OnPlatform WinUI=20,Default=50}"
+                FontFamily="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"
+                FontSize="{OnPlatform WinUI=16,Default=20}"
+                Text="{OnPlatform WinUI=Disconnect,Default=&#xf08b;}"/>
         </Grid>
         <CollectionView 
             x:Name="cvMessages" 
-            Grid.Row="1" 
+            Grid.Row="2" 
             ItemsUpdatingScrollMode="KeepLastItemInView" 
             x:DataType="vm:MessageViewModel" 
             ItemsSource="{Binding Messages}">
@@ -54,7 +65,7 @@
                             x:Name="image" 
                             WidthRequest="50" 
                             HeightRequest="50" 
-                            Source="{Binding Image}" 
+                            Source="{Binding Image,TargetNullValue=chating.png}" 
                             VerticalOptions="Start">
                             <Image.Clip>
                                 <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25" />
@@ -85,7 +96,7 @@
                             HorizontalOptions="Start" 
                             VerticalOptions="End" 
                             BackgroundColor="{AppThemeBinding Dark=#5C5C5C, Light=#EBEBEB}">
-                            
+
                         </Border>
                         <Frame  
                             Grid.Column="1"
@@ -100,7 +111,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,auto">
+        <Grid Grid.Row="3" ColumnSpacing="10" ColumnDefinitions="*,auto">
             <Editor 
                 x:Name="txtMessage" 
                 IsEnabled="{Binding IsConnected,Mode=OneWay}"
@@ -114,7 +125,10 @@
                 Grid.Column="1"
                 VerticalOptions="Center"
                 Command="{Binding SendCommand}"
-                Text="Send"/>
+                CornerRadius="{OnPlatform WinUI=20,Default=50}"
+                FontSize="{OnPlatform WinUI=16,Default=20}"
+                FontFamily="{OnPlatform WinUI=OpenSansRegular,Default=FontAwesome}"
+                Text="{OnPlatform WinUI=Send,Default=&#xf1d8;}"/>
         </Grid>
     </Grid>
 

@@ -5,10 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:WSClient"
     Shell.FlyoutBehavior="Disabled"
-    Title="WSClient">
+    Title="WS Chat">
 
-    <ShellContent
-        Title="Home"
+    <ShellContent    
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

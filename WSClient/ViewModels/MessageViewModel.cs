@@ -60,7 +60,7 @@ namespace WSClient.ViewModels
             SendCommand = new Command(OnSendExecuted);
 
             //Messages.Add(new Message { Sender = "Youssef", Text = "Hello\nIt's me from your future.\nPlease don't west your time.", Date = DateTime.Now });
-            //Messages.Add(new Message { Sender = "Youssef", Text = "Hello\nIt's me from your future.\nPlease don't west your time.", Date = DateTime.Now, Alignment = LayoutOptions.End, FlowDirection = FlowDirection.RightToLeft });
+            //Messages.Add(new Message { Sender = "Youssef", Text = "Hello\nIt's me from your future.\nPlease don't west your time.", Date = DateTime.Now, FlowDirection = FlowDirection.RightToLeft });
         }
 
         private async void OnConnectExecuted()
