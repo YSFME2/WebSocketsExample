@@ -70,19 +70,22 @@ namespace WSClient.Services
 
         internal async Task SendMessage(Message message, int trial = 1)
         {
-            var bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
-            if (ws.State == WebSocketState.Open)
+            try
             {
-                await ws.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
+                var bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
+                if (ws.State == WebSocketState.Open)
+                {
+                    await ws.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+                else
+                {
+                    await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                    await Connect();
+                    if (trial < 5)
+                        await SendMessage(message, ++trial);
+                }
             }
-            else
-            {
-                await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-
-                await Connect();
-                if (trial < 5)
-                    await SendMessage(message, ++trial);
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
         internal async Task CloseConnection()

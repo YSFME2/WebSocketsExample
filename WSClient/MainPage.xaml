@@ -5,42 +5,79 @@
              xmlns:vm="clr-namespace:WSClient.ViewModels"
              x:DataType="vm:MessageViewModel"
              x:Class="WSClient.MainPage">
+    <Grid 
+        RowDefinitions="auto,*,auto" 
+        RowSpacing="10" 
+        Margin="15">
 
-    <Grid RowDefinitions="auto,*,auto" RowSpacing="10" Margin="15">
-
-        <Grid ColumnSpacing="10" ColumnDefinitions="*,auto,auto">
+        <Grid 
+            ColumnSpacing="10" 
+            ColumnDefinitions="*,auto,auto">
             <Entry 
-                x:Name="txtSender" 
                 Text="{Binding Sender,Mode=TwoWay}"
+                IsEnabled="{Binding IsDisconnected,Mode=OneWay}"
                 Placeholder="User Name"/>
             <Button 
-                x:Name="btnConnect" 
-                Clicked="btnConnect_Clicked" 
+                Command="{Binding ConnectCommand}"
+                IsEnabled="{Binding IsDisconnected,Mode=OneWay}"
                 Grid.Column="1"
                 Text="Connect"/>
             <Button 
-                x:Name="btnDisconnect" 
-                IsEnabled="False"
-                Clicked="btnDisconnect_Clicked"
+                IsEnabled="{Binding IsConnected}"
+                Command="{Binding DisconnectCommand,Mode=OneWay}"
                 Grid.Column="2" 
                 Text="Disconnect"/>
         </Grid>
-        <CollectionView x:Name="cvMessages" Grid.Row="1" ItemsUpdatingScrollMode="KeepLastItemInView" x:DataType="vm:MessageViewModel" ItemsSource="{Binding Messages}">
+        <CollectionView 
+            x:Name="cvMessages" 
+            Grid.Row="1" 
+            ItemsUpdatingScrollMode="KeepLastItemInView" 
+            x:DataType="vm:MessageViewModel" 
+            ItemsSource="{Binding Messages}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Message"  >
-                    <Grid ColumnDefinitions="auto,*" RowDefinitions="*,auto" FlowDirection="{Binding FlowDirection}" ColumnSpacing="5" Margin="5" Padding="5">
-                       
-                        <Image x:Name="image" WidthRequest="60" HeightRequest="60" Source="{Binding Image}" VerticalOptions="Center">
+                <DataTemplate x:DataType="models:Message" >
+                    <Grid 
+                        ColumnDefinitions="auto,*" 
+                        RowDefinitions="*,auto" 
+                        FlowDirection="{Binding FlowDirection}" 
+                        ColumnSpacing="5" 
+                        Margin="5" 
+                        Padding="5">
+                        <Image 
+                            x:Name="image" 
+                            WidthRequest="50" 
+                            HeightRequest="50" 
+                            Source="{Binding Image}" 
+                            VerticalOptions="Start">
                             <Image.Clip>
-                                <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
+                                <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25" />
                             </Image.Clip>
+                            <Image.Shadow>
+                                <Shadow Brush="Gray" Radius="10" Opacity="0.3"  />
+                            </Image.Shadow>
                         </Image>
                         <ActivityIndicator IsRunning="{Binding Source={x:Reference image},Path=IsLoading}">
 
                         </ActivityIndicator>
-                        <Label Text="{Binding Sender}" Grid.Row="1" FontSize="12"/>
-                        <Label Text="{Binding Date}" Grid.Row="1" Grid.Column="1" FontSize="12"/>
-                        <Border Grid.Column="1" WidthRequest="10" HeightRequest="10" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="End" BackgroundColor="{AppThemeBinding Dark=#5C5C5C, Light=#EBEBEB}">
+                        <Label 
+                            Text="{Binding Sender}" 
+                            HorizontalOptions="Center" 
+                            Grid.Row="1" 
+                            FontSize="12"/>
+                        <Label 
+                            Text="{Binding Date}" 
+                            Grid.Row="1" 
+                            HorizontalOptions="Start" 
+                            Grid.Column="1" 
+                            FontSize="12"/>
+                        <Border 
+                            Grid.Column="1" 
+                            WidthRequest="10" 
+                            HeightRequest="10" 
+                            StrokeThickness="0" 
+                            HorizontalOptions="Start" 
+                            VerticalOptions="End" 
+                            BackgroundColor="{AppThemeBinding Dark=#5C5C5C, Light=#EBEBEB}">
                             
                         </Border>
                         <Frame  
@@ -59,16 +96,17 @@
         <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,auto">
             <Editor 
                 x:Name="txtMessage" 
-                IsEnabled="False"
+                IsEnabled="{Binding IsConnected,Mode=OneWay}"
                 AutoSize="TextChanges"
                 Grid.Column="0" 
+                Text="{Binding Message}"
                 Placeholder="Message"/>
             <Button
                 x:Name="btnSend"
-                IsEnabled="False"
+                IsEnabled="{Binding IsSendingEnabled,Mode=OneWay}"
                 Grid.Column="1"
                 VerticalOptions="Center"
-                Clicked="btnSend_Clicked"
+                Command="{Binding SendCommand}"
                 Text="Send"/>
         </Grid>
     </Grid>
