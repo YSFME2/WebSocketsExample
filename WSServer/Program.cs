@@ -11,10 +11,14 @@ namespace WSServer
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            //builder.WebHost.UseUrls("http://localhost:80");
+            builder.Services.AddSignalR();
             var app = builder.Build();
 
             app.UseWebSockets();
             app.Map("/", async context => await context.Response.WriteAsync("hello world"));
+
+            app.MapHub<ChatHub>("chat");
             var clients = new List<WebSocket>();
             app.Map("/ws", async context =>
             {
